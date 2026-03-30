@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🧥 StyleVault — Smart Online Wardrobe System
 
 A full-stack MERN application for managing your wardrobe intelligently.
@@ -246,3 +247,6 @@ CLIENT_URL=http://localhost:3000
 REACT_APP_API_URL=http://localhost:5000/api
 REACT_APP_NAME=StyleVault
 ```
+=======
+# SMART-WARDROBE
+>>>>>>> 64b2d4e667d494ed2d3f947ca38f07dd690f344d
