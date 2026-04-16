@@ -43,7 +43,7 @@ jobs:
         working-directory: backend
 
       - name: Install Frontend Dependencies
-        run: npm ci
+        run: npm install
         working-directory: frontend
 
       - name: Build React App
