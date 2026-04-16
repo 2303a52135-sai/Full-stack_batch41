@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Show repository structure
+        run: |
+          echo "Top-level files and folders:"
+          ls -la
+          echo ""
+          echo "Backend folder:"
+          ls -la backend
+          echo ""
+          echo "Frontend folder:"
+          ls -la frontend
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+
+      - name: Install Backend Dependencies
+        run: npm ci
+        working-directory: backend
+
+      - name: Run Backend Tests
+        run: npm test --if-present
+        working-directory: backend
+
+      - name: Install Frontend Dependencies
+        run: npm ci
+        working-directory: frontend
+
+      - name: Build React App
+        run: npm run build
+        working-directory: frontend
