@@ -20,8 +20,9 @@ export default function PlannerPage() {
   const weekDays  = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
 
   useEffect(() => {
-    const start = format(weekStart, 'yyyy-MM-dd');
-    const end   = format(addDays(weekStart, 6), 'yyyy-MM-dd');
+    const currentWeekStart = startOfWeek(currentWeek, { weekStartsOn: 1 });
+    const start = format(currentWeekStart, 'yyyy-MM-dd');
+    const end   = format(addDays(currentWeekStart, 6), 'yyyy-MM-dd');
     api.get(`/planner?startDate=${start}&endDate=${end}`).then(r => setPlans(r.data.data)).catch(console.error);
   }, [currentWeek]);
 

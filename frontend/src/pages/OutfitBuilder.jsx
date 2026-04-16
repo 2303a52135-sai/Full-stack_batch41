@@ -18,7 +18,6 @@ export default function OutfitBuilder() {
   const [recommendations, setRecs]    = useState([]);
   const [activeTab, setActiveTab]     = useState('builder'); // 'builder' | 'saved' | 'ai'
   const [pickingFor, setPickingFor]   = useState(null);      // which position we're picking
-  const [loading, setLoading]         = useState(false);
   const [saving, setSaving]           = useState(false);
 
   useEffect(() => {

@@ -51,6 +51,10 @@ jobs:
         working-directory: frontend
 
       - name: Build React App
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+          GENERATE_SOURCEMAP: "false"
+          CI: "false"
         run: |
           chmod +x node_modules/.bin/react-scripts || true
           npm run build
