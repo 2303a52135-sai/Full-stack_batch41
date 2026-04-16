@@ -59,3 +59,22 @@ jobs:
           chmod +x node_modules/.bin/react-scripts || true
           npm run build
         working-directory: frontend
+
+  deploy-render:
+    name: Deploy to Render
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Render Deploy
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+            echo "RENDER_DEPLOY_HOOK is not set in repository secrets"
+            exit 1
+          fi
+
+          curl -fsS -X POST "$RENDER_DEPLOY_HOOK"
+          echo "Render deploy triggered successfully"
