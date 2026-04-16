@@ -67,8 +67,22 @@ const login = async (req, res, next) => {
 
     const { email, password } = req.body;
 
+    const normalizedEmail = email.toLowerCase();
+
     // Find user WITH password (select: false by default)
-    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+    let user = await User.findOne({ email: normalizedEmail }).select('+password');
+
+    // Dev convenience: auto-create demo user on first demo login if not seeded
+    const isDemoLogin = normalizedEmail === 'demo@wardrobe.com';
+    if (!user && isDemoLogin && process.env.NODE_ENV !== 'production' && password === 'demo1234') {
+      user = await User.create({
+        name: 'Demo User',
+        email: 'demo@wardrobe.com',
+        password: 'demo1234',
+      });
+      user = await User.findById(user._id).select('+password');
+    }
+
     if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid email or password.' });
     }

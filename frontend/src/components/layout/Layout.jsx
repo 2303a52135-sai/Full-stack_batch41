@@ -93,7 +93,7 @@ export default function Layout() {
   );
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[var(--color-bg)]">
+    <div className="flex min-h-screen bg-[var(--color-bg)]">
       {/* ── Desktop Sidebar ─────────────────────────────────── */}
       <aside className="hidden lg:flex lg:w-60 xl:w-64 flex-col border-r border-[var(--color-border)] bg-[var(--color-surface)] flex-shrink-0">
         <SidebarContent onClose={() => {}} />
@@ -126,7 +126,7 @@ export default function Layout() {
       </AnimatePresence>
 
       {/* ── Main Content ─────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile topbar */}
         <header className="lg:hidden flex items-center justify-between px-4 py-3 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
           <button onClick={() => setSidebarOpen(true)} className="btn-ghost p-2">
@@ -139,7 +139,7 @@ export default function Layout() {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <motion.div
               key={window.location.pathname}

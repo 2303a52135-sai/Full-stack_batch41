@@ -27,14 +27,6 @@ const app = express();
 // ─── Security Middleware ───────────────────────────────────────────────────
 app.use(helmet());
 
-// Rate limiting: 100 requests per 15 minutes per IP
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: 'Too many requests from this IP, please try again later.',
-});
-app.use('/api/', limiter);
-
 // ─── CORS Configuration ───────────────────────────────────────────────────
 app.use(cors({
   origin: function (origin, callback) {
@@ -49,6 +41,17 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
+// Rate limiting: 100 requests per 15 minutes per IP
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: {
+    success: false,
+    message: 'Too many requests from this IP, please try again later.',
+  },
+});
+app.use('/api/', limiter);
 
 // ─── Body Parsing ─────────────────────────────────────────────────────────
 app.use(express.json({ limit: '10mb' }));
