@@ -107,9 +107,15 @@ app.use('*', (req, res) => {
 
 // ─── Database Connection & Server Start ───────────────────────────────────
 const PORT = process.env.PORT || 5000;
+const mongoUri = process.env.MONGO_URI;
+
+if (!mongoUri || mongoUri.includes('<db_password>')) {
+  console.error('❌ MONGO_URI is not configured. Set your MongoDB Atlas password in backend/.env');
+  process.exit(1);
+}
 
 mongoose
-  .connect(process.env.MONGO_URI || 'mongodb://localhost:27017/smart_wardrobe')
+  .connect(mongoUri)
   .then(() => {
     console.log('✅ MongoDB connected successfully');
     app.listen(PORT, () => {
